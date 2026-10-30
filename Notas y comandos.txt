@@ -1,23 +1,56 @@
---------------------- | ANOTACIONES | ---------------------
+------------------------------------------ | ANOTACIONES | ------------------------------------------
 
+Fork = crea una copia del repositorio el cual nos permite luego usarlo para codespaces.
 
-Fork = crea una copia del repositorio el cual nos permite luego usarlo para codespaces
-
-Codespaces = servidor remoto
+Codespaces = servidor remoto.
 
 Lineas de codigo : 
       sudo = "Admin" ya que en linux  no hay admin. 
       apt = comando para instalar paquetes , base de datos, etc. 
       update = actualizar las referencias a las aplicaciones de linux.
-      - y = salta las confimaciones de instalacion
+      -y = salta las confimaciones de instalacion.
 
 CREA UN ALIAS PARA LA Tabla
 
     FROM appointments a 
 
+bookstoredb.* ---> .* es un comodin que significa "todas las tablas" dentro de la base de datos especificada.
+
+VARCHAR (N) = texto de longitud definida.
+TEXT = texto de gran tamaño.
+
+COLLATE = determina como se comparan y ordenan los caracteres dentro de un mismo CHARACTER SET, afecta a las clausulas WHERE, ORDER BY, GROUP BY y a las busquedas con indices.
+TIMESTAMPDIFF(YEAR, birth_date, CURDATE())
+    YEAR = Unidad de medida.
+    birth_date = Campos.
+    CURDATE() = Fecha actual.
+------------------------------------------ | COMANDOS | ------------------------------------------
+
+    1 ) sudo service mariadb start / stop / status
+    2 ) mysql -u bookstore_user -p 
+    3 ) 12345    
+    4 ) sudo mariadb
+
+
+Para volver a estado cero si existiesen usuarios y base de datos creadas previamente con el mismo nombre 
+
+    SHOW GRANTS FOR 'bookstore_user'@'localhost';
+    REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'bookstore_user'@'localhost'; 
+    DROP USER IF EXISTS 'bookstore_user'@'localhost'; 
+    DROP DATABASE IF EXISTS bookstoredb; 
+    FLUSH PRIVILEGES;
+
+
+Dentro de MariaDB (  MariaDB [(none)]> ) se puede:
+    SHOW DATABASES; 
+    CREATE DATABASE mi_proyecto; 
+    USE mi_proyecto; 
+    exit; 
+
+DELIMITER cambiar temporalmente el carácter que marca el final de una sentencia SQL
+
 
 --------------------- | INSTALACION  Y CONFIGURACION DE MariaDB  | ---------------------
-
  
  1. Actualizar e instalar MariaDB de forma no interactiva
     sudo apt update
@@ -35,21 +68,7 @@ Tip: Para un entorno de desarrollo rápido, puedes saltarte esto y entrar direct
 
     sudo mariadb
 
-Dentro de MariaDB (  MariaDB [(none)]> ) se puede:
-
-    ● Ver bases de datos: SHOW DATABASES; 
-    ● Crear una nueva: CREATE DATABASE mi_proyecto; 
-    ● Usar la base de datos: USE mi_proyecto; 
-    ● Salir: exit; 
-
-Para volver a estado cero si existiesen usuarios y base de datos creadas previamente con el mismo nombre 
-    REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'bookstore_user'@'localhost'; 
-    DROP USER IF EXISTS 'bookstore_user'@'localhost'; 
-    DROP DATABASE IF EXISTS bookstoredb; 
-    FLUSH PRIVILEGES; 
-
-
---------------------- | EJEMPLO | ---------------------
+------------------------------------------ | EJEMPLO GUIA 1 | ------------------------------------------
 
 
 (EJECUTAR COMO ROOT) 
@@ -62,6 +81,7 @@ Crea una base de datos llamada bookstoredb con el cotejamiento utf8_unicode_ci.
 Crea un usuario llamado "bookstore_user" con la contraseña 12345
 
     CREATE USER 'bookstore_user'@'localhost' IDENTIFIED BY '12345';
+
 
 (EJECUTAR COMO ROOT)
 Otorgar todos los permisos sobre la base de datos "bookstoredb" al usuario "bookstore_user"
@@ -76,8 +96,8 @@ Se puede verificar qué permisos tiene "bookstore_user" con
 
     SHOW GRANTS FOR 'bookstore_user'@'localhost';
 
---Esto mostrará algo como:
---GRANT ALL PRIVILEGES ON `bookstoredb`.* TO 'bookstore_user'@'localhost'
+Esto mostrará algo como:
+    GRANT ALL PRIVILEGES ON `bookstoredb`.* TO 'bookstore_user'@'localhost'
 
 Para eliminar en cascada hay que modificar la tablas correspondientes de la siguiente forma 
 
@@ -91,14 +111,6 @@ Para eliminar en cascada hay que modificar la tablas correspondientes de la sigu
 
     Nota: ibfk = InnoDB Foreign Key. Es una convención de nomenclatura. 
     
---------------------- | INCIO DE SESION | ---------------------
-
-
-    1 ) sudo service mariadb start / stop / status
-    2 ) mysql -u bookstore_user -p 
-    3 ) 12345    
-    4 ) sudo mariadb
-
 
 --------------------- | CONEVENCIONES DE ESCRITURA | ---------------------
 
